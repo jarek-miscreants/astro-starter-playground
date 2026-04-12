@@ -5,7 +5,6 @@ import Button from "../components/Button.astro";
 import ButtonGroup from "../components/ButtonGroup.astro";
 import SectionMain from "../components/SectionMain.astro";
 import CardFeatured from "../components/CardFeatured.astro";
-import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import featureOne from "../images/feature-1.webp";
 import CardIcon from "../components/CardIcon.astro";
@@ -63,7 +62,7 @@ const faqs = (await getCollection("faq"))
           description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
         >
           <Icon slot="icon" name="lucide:layers" class="w-6 h-6 text-gray-500" aria-hidden="true" />
-          <Image slot="media" src={featureOne} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
+          <img slot="media" src={featureOne.src} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
         </CardFeatured>
         <CardFeatured
         border="none"
@@ -73,7 +72,7 @@ const faqs = (await getCollection("faq"))
         description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
       >
         <Icon slot="icon" name="lucide:database" class="w-6 h-6 text-gray-500" aria-hidden="true" />
-        <Image slot="media" src={featureOne} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
+        <img slot="media" src={featureOne.src} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
       </CardFeatured>
       <CardFeatured
       border="none"

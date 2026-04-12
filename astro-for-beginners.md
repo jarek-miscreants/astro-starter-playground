@@ -3360,6 +3360,155 @@ import { clients } from "../data/clients.json";
 
 ---
 
+## 32b. Environment variables (`.env`)
+
+Environment variables store values that change between environments (local dev, staging, production) — API keys, service IDs, feature flags, base URLs. They stay out of your code and out of git.
+
+### Setup
+
+Create a `.env` file in the project root:
+
+```
+# .env
+PUBLIC_GTAG_ID=G-XXXXXXXXXX
+PUBLIC_SITE_URL=https://example.com
+API_SECRET_KEY=sk_live_abc123
+```
+
+Astro loads `.env` automatically — no extra packages needed.
+
+### The `PUBLIC_` prefix rule
+
+Astro splits env vars into two categories based on their name:
+
+| Prefix | Available in | Use for |
+|---|---|---|
+| `PUBLIC_` | Server **and** client (browser) | Analytics IDs, public API keys, feature flags |
+| No prefix | Server only (frontmatter, endpoints) | Secret keys, database URLs, private tokens |
+
+```astro
+---
+// Both work in frontmatter (server-side)
+const gtagId = import.meta.env.PUBLIC_GTAG_ID;    // "G-XXXXXXXXXX"
+const secret = import.meta.env.API_SECRET_KEY;     // "sk_live_abc123"
+---
+```
+
+```astro
+<script>
+  // Only PUBLIC_ vars work in client-side scripts
+  const gtagId = import.meta.env.PUBLIC_GTAG_ID;    // "G-XXXXXXXXXX"
+  const secret = import.meta.env.API_SECRET_KEY;     // undefined — blocked
+</script>
+```
+
+**If you forget the `PUBLIC_` prefix**, the variable will be `undefined` in the browser. This is a security feature — it prevents secret keys from leaking into client-side bundles.
+
+### Using env vars in components
+
+The typical pattern: read the variable in the frontmatter, then use it conditionally so the component doesn't break when the variable isn't set.
+
+```astro
+---
+const gtagId = import.meta.env.PUBLIC_GTAG_ID;
+---
+
+{gtagId && (
+  <script type="text/partytown" src={`https://www.googletagmanager.com/gtag/js?id=${gtagId}`}></script>
+)}
+```
+
+The `{gtagId && (...)}` guard means: if the env var isn't set (local dev without `.env`, or a deployment where it's not configured), render nothing. No broken requests, no console errors.
+
+### Passing env vars to `is:inline` scripts
+
+`is:inline` scripts skip Astro's bundler, so they can't access `import.meta.env` directly. Use `define:vars` to bridge:
+
+```astro
+---
+const apiUrl = import.meta.env.PUBLIC_API_URL;
+---
+
+<script is:inline define:vars={{ apiUrl }}>
+  // apiUrl is available as a JS variable here
+  fetch(apiUrl + "/data").then(r => r.json()).then(console.log);
+</script>
+```
+
+Or use data attributes (same pattern as canvas components):
+
+```astro
+<div data-api-url={import.meta.env.PUBLIC_API_URL}>...</div>
+```
+
+### Environment-specific files
+
+Astro supports multiple `.env` files, loaded by mode:
+
+| File | Loaded when |
+|---|---|
+| `.env` | Always |
+| `.env.local` | Always, but **gitignored** — your local overrides |
+| `.env.development` | `astro dev` only |
+| `.env.production` | `astro build` only |
+
+Precedence: mode-specific file > `.env.local` > `.env`. More specific files override less specific ones.
+
+### The `.env.example` template
+
+Since `.env` is gitignored (it should be — it may contain secrets), create a `.env.example` file that documents what variables the project expects. This **is** committed to git:
+
+```
+# .env.example — copy to .env and fill in values
+
+# Google Analytics (optional — omit to disable tracking)
+PUBLIC_GTAG_ID=
+
+# Site URL (used for canonical links, OG tags)
+PUBLIC_SITE_URL=
+
+# HubSpot (optional — omit to skip form embed)
+PUBLIC_HUBSPOT_PORTAL_ID=
+PUBLIC_HUBSPOT_FORM_ID=
+
+# Private — never use PUBLIC_ prefix for secrets
+API_SECRET_KEY=
+```
+
+When someone clones the repo, they copy `.env.example` to `.env` and fill in their values:
+
+```bash
+cp .env.example .env
+```
+
+### TypeScript support
+
+Add type declarations so `import.meta.env` has autocomplete:
+
+```ts
+// src/env.d.ts
+interface ImportMetaEnv {
+  readonly PUBLIC_GTAG_ID: string;
+  readonly PUBLIC_SITE_URL: string;
+  readonly API_SECRET_KEY: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}
+```
+
+Now TypeScript will warn you about typos like `import.meta.env.PUBLIC_GTAG_IDD`.
+
+### Common mistakes
+
+1. **Committing `.env` to git.** Add it to `.gitignore`. Secrets in git history are compromised forever.
+2. **Forgetting `PUBLIC_` on client-side vars.** The variable will be `undefined` in the browser with no error — a silent failure.
+3. **Using env vars in `is:inline` scripts without `define:vars`.** `import.meta.env` doesn't work in inline scripts — they skip the bundler.
+4. **Hardcoding values that change per environment.** If it's different between dev and production (URLs, IDs, keys), it belongs in `.env`.
+
+---
+
 ## 33. Common pitfalls
 
 A collection of mistakes that are easy to make and hard to debug.
