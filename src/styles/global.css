@@ -48,9 +48,11 @@
    without wrapping content in an explicit container.
    ========================================================================== */
 @layer base {
-  body {
-    
+  body {    
     @apply bg-bg min-h-screen;
+  }
+  body > main {
+    flex: 1 0 auto;
   }
   html {
    scrollbar-gutter: stable;
