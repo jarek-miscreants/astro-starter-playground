@@ -20,6 +20,7 @@ import HeroCanvas from "../components/HeroCanvas.astro";
 const faqs = (await getCollection("faq"))
   .filter((faq) => faq.data.page === "homepage")
   .sort((a, b) => a.data.order - b.data.order);
+import Logo from "../components/Logo.astro";
 ---
 
 <Layout title="Astro Playground">                                                                                                                                                                                                                             
@@ -28,12 +29,15 @@ const faqs = (await getCollection("faq"))
       <SectionMain id="hero" padding="none" contentPadding="none" contentClass="items-center text-center relative">
       
         <div class="relative z-20 flex flex-col items-center gap-2 py-32 md:py-48 px-6">
-          <h1 class="h1">Astro Playground</h1>
+          <h1 class="h1">Astro test</h1>
+
           <p class="mt-2 text-xl text-gray-800">Testing workflow</p>
           <TestComponent message="Test" />
           <ButtonGroup>
             <Button />
             <Button variant="secondary" label="Get a Demo" />
+          
+            <Button href="/test-page-creation" label="This is new button" />
           </ButtonGroup>
         </div>
       </SectionMain>
@@ -51,10 +55,10 @@ const faqs = (await getCollection("faq"))
       <SectionMain id="features" padding="sm" contentPadding="none" borderTop>
       
         <div class="flex flex-col px-6 gap-4">
-          <h2 class="h2 ">Features</h2>
+          <h2 class="h2 mt-10">Features</h2>
           <p class="mt-2 text-xl text-gray-800"></p>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-grid-border border-y border-grid-border">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-grid-border border-y border-grid-border w-full">
           <CardFeatured
           border="none"
           class="bg-bg"
@@ -62,7 +66,7 @@ const faqs = (await getCollection("faq"))
           title="Design content structures your way."
           description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
         >
-          <Icon slot="icon" name="lucide:layers" class="w-6 h-6 text-gray-800" aria-hidden="true" />
+
           <img slot="media" src={featureOne.src} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
         </CardFeatured>
         <CardFeatured
@@ -72,7 +76,7 @@ const faqs = (await getCollection("faq"))
         title="Design content structures your way."
         description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
       >
-        <Icon slot="icon" name="lucide:database" class="w-6 h-6 text-gray-800" aria-hidden="true" />
+
         <img slot="media" src={featureOne.src} alt="Schema builder screenshot" class="w-full h-auto mt-4 mask-b-from-30% mask-b-to-95%" />
       </CardFeatured>
       <CardFeatured
@@ -82,7 +86,7 @@ const faqs = (await getCollection("faq"))
       title="Design content structures your way."
       description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
     >
-      <Icon slot="icon" name="lucide:zap" class="w-6 h-6 text-gray-800" aria-hidden="true" />
+
     </CardFeatured>
        <CardFeatured
         border="none"
@@ -91,7 +95,7 @@ const faqs = (await getCollection("faq"))
         title="Design content structures your way."
         description="Miscreants gives you full control over content with a streamlined, API-first experience — perfect for teams who want speed without sacrificing flexibility."
       >
-        <Icon slot="icon" name="lucide:settings-2" class="w-6 h-6 text-gray-800" aria-hidden="true" />
+
       </CardFeatured>
         </div>
          
@@ -101,12 +105,18 @@ const faqs = (await getCollection("faq"))
         <div class="section-pattern-horizontal w-full py-10"></div>
         <div class="grid grid-cols-1 lg:grid-cols-5 gap-0 border-y border-grid-border divide-y lg:divide-y-0">
           <CardIcon header="98.3% uptime" class="bg-bg">
-            <Icon slot="icon" name="lucide:activity" class="w-6 h-6 text-gray-800 mb-4" aria-hidden="true" />
-            <p slot="content">Proven reliability across sources with proactive monitoring</p>
+            <Icon slot="icon" name="lucide:activity" class="w-6 h-6 text-gray-800 mb-4" aria-hidden="true">
+              <Logo />
+            </Icon>
+            <p slot="content">Proven reliability across sources with proactive monitoring
+            </p>
+
           </CardIcon>
           <CardIcon header="Enterprise security" class="bg-bg">
+            <p slot="content">Proven reliability across sources with proactive monitoring
+            </p>
             <Icon slot="icon" name="lucide:shield-check" class="w-6 h-6 text-gray-800 mb-4" aria-hidden="true" />
-            <p slot="content">Encryption at every step with compliance-ready infrastructure</p>
+
           </CardIcon>
           <CardIcon header="Scalable infrastructure" class="bg-bg">
             <Icon slot="icon" name="lucide:server" class="w-6 h-6 text-gray-800 mb-4" aria-hidden="true" />
@@ -119,6 +129,7 @@ const faqs = (await getCollection("faq"))
           <CardIcon header="24/7 support" class="bg-bg">
             <Icon slot="icon" name="lucide:life-buoy" class="w-6 h-6 text-gray-800 mb-4" aria-hidden="true" />
             <p slot="content">Proven reliability across sources with proactive monitoring</p>
+
           </CardIcon>
         </div>
       </SectionMain>
@@ -184,7 +195,7 @@ const faqs = (await getCollection("faq"))
           <p class="mt-2 text-gray-800">FAQ-style accordion with CSS-only animations.</p>
         </div>
 
-        <Accordion openByDefault={1} class="flex flex-col ">
+        <Accordion closeOnSecondClick="" openByDefault={1} class="flex flex-col ">
           {faqs.map(async (faq) => {
             const { Content } = await render(faq);
             return (
@@ -204,10 +215,34 @@ const faqs = (await getCollection("faq"))
         </Accordion>
       </SectionMain>
 
+
+
+    
+    
       <SectionMain id="hubspot-form" padding="sm" borderTop>
-        <div data-accent="tl"></div><div data-accent="tr"></div>
+
         <HubspotForm formId="34f97be6-a435-4a54-a676-371efe148e70" />
       </SectionMain>
-
+      <SectionMain />
+    
+    
+      <SectionMain>
+        <div class="flex flex-row">
+        
+        
+          <CardIcon header="24/7 support">
+          
+            <p slot="content">Paragraph text</p>
+            <Icon class="w-6 h-6 text-black mb-4" aria-hidden="true" slot="icon" name="lucide:headphones">
+            </Icon>
+          
+          </CardIcon>
+        
+          <CardIcon>
+            <p class="mt-2" slot="content">Paragraph text</p>
+            <Icon class="w-6 h-6 mb-4" name="lucide:camera" slot="icon" />
+          </CardIcon>
+        </div>
+      </SectionMain>
     </main>
   </Layout>

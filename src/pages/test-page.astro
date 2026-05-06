@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionMain from "../components/SectionMain.astro";
+import CardIcon from "../components/CardIcon.astro";
+import CardFeatured from "../components/CardFeatured.astro";
+import Grid from "../components/Grid.astro";
+---
+<Layout title="Astro Playground">  
+    <main id="main">
+
+    
+      <SectionMain paddingTop="lg" paddingBottom="xs">
+      
+      
+      
+        <CardFeatured eyebrow="Eyebrow content" title="This is title" description="Miscreants sample contnet" />
+      </SectionMain>
+    
+      <SectionMain contentPadding="default" padding="xs" paddingBottom="xs" paddingTop="xs">
+      
+        <Grid mobile="1" tablet="2" desktop="3">
+          <CardFeatured description="This card was placed entirely through the visual editor — no source code touched." title="Built with components & slots" eyebrow="Now in beta">
+          <img slot="media" class="max-w-full h-auto" src="https://placehold.co/600x400" alt="Visual editor preview placeholder showing 600x400 layout" />
+        </CardFeatured>
+          <CardFeatured description="This card was placed entirely through the visual editor — no source code touched." title="Built with components & slots" eyebrow="Now in beta">
+          <img slot="media" class="max-w-full h-auto" src="https://placehold.co/600x400" alt="Visual editor preview placeholder showing 600x400 layout" />
+        </CardFeatured>
+          <CardFeatured description="This card was placed entirely through the visual editor — no source code touched." title="Built with components & slots" eyebrow="Now in beta">
+          <img slot="media" class="max-w-full h-auto" src="https://placehold.co/600x400" alt="Visual editor preview placeholder showing 600x400 layout" />
+        </CardFeatured>
+        
+</Grid>
+      
+        <Grid tablet="2" desktop="6">
+        
+        
+          <div class="flex-col mt-2 border-2 text-red-950">
+            <h1 class="text-4xl font-bold text-slate-500">Heading</h1>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold">Heading</h1>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold">Heading</h1>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold">Heading</h1>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold">Heading</h1>
+          </div>
+          <div>
+            <h1 class="text-4xl font-bold">Heading</h1>
+          </div>
+        </Grid>
+      </SectionMain>
+    </main>
+</Layout>

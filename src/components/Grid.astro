@@ -2,10 +2,15 @@
 type Cols = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 
 interface Props {
+  /** Columns on phones in portrait orientation. Defaults to 1. */
   mobile?: Cols;
+  /** Columns on phones in landscape (>= sm breakpoint, 640px). */
   mobileLandscape?: Cols;
+  /** Columns on tablets (>= md breakpoint, 768px). */
   tablet?: Cols;
+  /** Columns on laptops and larger (>= lg breakpoint, 1024px). */
   desktop?: Cols;
+  /** Tailwind gap utility for spacing between cells (e.g. gap-4, gap-8). */
   gap?: string;
   class?: string;
 }

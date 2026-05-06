@@ -1,0 +1,28 @@
+---
+import Layout from "../layouts/Layout.astro";
+import SectionMain from "../components/SectionMain.astro";
+import LogoMarquee from "../components/LogoMarquee.astro";
+import Grid from "../components/Grid.astro";
+import CardFeatured from "../components/CardFeatured.astro";
+import Button from "../components/Button.astro";
+---
+
+<Layout title="Test page creation">
+
+
+  <main>
+    <SectionMain class="">
+      <div>
+      
+        <Grid>
+          <CardFeatured>
+            Sample conten
+
+          
+            <Button slot="button" />
+          </CardFeatured>
+        </Grid>
+      </div>
+    </SectionMain>
+  </main>
+</Layout>

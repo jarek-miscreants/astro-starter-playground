@@ -27,11 +27,13 @@
   }[border];
 
   const hasMedia = Astro.slots.has("media");
-  ---
+---
   <div class:list={["px-4 pt-4 md:pt-8 md:px-8 rounded-sm relative", hasMedia ? "pb-0" : "pb-8", borderClass, className]}>
     <div class="flex flex-col gap-4">
-      <TitleTag class={titleClass}>{title}</TitleTag>
-      <p class="text-muted">{description}</p>
+      {eyebrow && <p class="text-eyebrow text-muted">{eyebrow}</p>}
+      {title && <TitleTag class={titleClass}>{title}</TitleTag>}
+      {description && <p class="text-muted">{description}</p>}
+      <slot />   {/* default slot — renders any children passed between <CardFeatured>…</CardFeatured> */}
       <slot name="media" />   {/* renders nothing if caller passes nothing */}
       <slot name="button" />
     </div>
